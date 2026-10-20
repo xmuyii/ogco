@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGCO | Enjoy the moment with your CO</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        OGCO: {
+                            primary: '#14532d', // Deep Forest Leaf Green
+                            secondary: '#16a34a', // Bright Green
+                            accent: '#ca8a04', // Warm Gold
+                            dark: '#052e16'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f0fdf4;
+            color: #1e293b;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        .card-shadow {
+            box-shadow: 0 15px 35px -5px rgba(20, 83, 45, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-OGCO-primary selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- CONFIGURATION & PRICING CONTROL -->
+    <script>
+        // BUSINESS & WHATSAPP SETTINGS
+        const WHATSAPP_NUMBER = "2349030587036"; // Replace with your WhatsApp number
+        const UNIT_PRICE = 1000; // Price per pack/bundle in Naira (Easily editable here)
+
+        // DELIVERY ZONES & PRICES (Easily editable here)
+        const deliveryZones = {
+            "Elewuro Area": 1000,
+            "Idiape Area": 1000,
+            "Ojurin Area": 1000,
+            "Olorunda Area": 1500,
+            "Any other location (Standard Dispatch)": 2000
+        };
+    </script>
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-OGCO-primary text-green-100 text-xs sm:text-sm py-2 px-4 font-bold text-center border-b border-green-800">
+        <div class="container mx-auto flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-leaf text-green-400"></i>
+            <span>🌿 Enjoy the moment with CO, our CO is tested and trusted to ensure quality. Fast Nationwide Dispatch!</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 max-w-2xl flex-grow">
+        
+        <!-- Header Brand -->
+        <div class="text-center mb-10">
+            <div class="inline-flex w-16 h-16 rounded-3xl bg-gradient-to-tr from-OGCO-primary to-green-500 text-white items-center justify-center text-3xl shadow-xl shadow-OGCO-primary/20 mb-3">
+                <i class="fa-solid fa-cannabis"></i>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-black text-slate-900 font-heading">OGCO</h1>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">Enjoy the moment with CO. No more complexity. Get your CO delivered straight to your door.</p>
+        </div>
+
+        <!-- Step 1: Select Quantity Card -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 card-shadow mb-6">
+            <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-full bg-OGCO-primary text-white font-bold text-sm flex items-center justify-center">1</span>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">Select Quantity</h3>
+                    <p class="text-xs text-slate-500">Choose how many packs of CO leaves you need</p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between bg-green-50/50 p-4 rounded-2xl border border-green-200 mb-4">
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">CO Leaves (Pack)</h4>
+                    <span id="unitPriceDisplay" class="text-xs font-bold text-OGCO-primary">₦5,000 per pack</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button type="button" onclick="adjustQuantity(-1)" class="w-10 h-10 rounded-xl bg-white border border-slate-300 text-slate-800 font-bold hover:bg-slate-100 flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                    <span id="displayQuantity" class="text-xl font-black text-slate-900 w-8 text-center font-heading">1</span>
+                    <button type="button" onclick="adjustQuantity(1)" class="w-10 h-10 rounded-xl bg-OGCO-primary text-white font-bold hover:bg-green-900 flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Delivery Location & Details Card -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 card-shadow mb-6">
+            <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-full bg-OGCO-primary text-white font-bold text-sm flex items-center justify-center">2</span>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">Your Delivery Information</h3>
+                    <p class="text-xs text-slate-500">Where should our dispatch rider drop your package?</p>
+                </div>
+            </div>
+
+            <form id="orderForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Full Name</label>
+                    <input type="text" id="custName" required placeholder="e.g. John Doe" class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-OGCO-primary font-medium">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Phone Number (WhatsApp)</label>
+                    <input type="tel" id="custPhone" required placeholder="e.g. 08030000000" class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-OGCO-primary font-medium">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Select Delivery Area / Zone</label>
+                    <select id="deliveryZone" onchange="updateTotal()" class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-OGCO-primary font-medium">
+                        <!-- Populated dynamically from zones object -->
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Add Full Street Address, Landmark and any other description.</label>
+                    <textarea id="custAddress" required rows="2" placeholder="e.g. No 14, Akobo Express, close to the junction..." class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-OGCO-primary font-medium"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Step 3: Cost Summary & Secure Payment Trigger -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 card-shadow">
+            <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-full bg-OGCO-primary text-white font-bold text-sm flex items-center justify-center">3</span>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">Payment & Confirmation</h3>
+                    <p class="text-xs text-slate-500">Review total cost and complete payment to dispatch</p>
+                </div>
+            </div>
+
+            <!-- Receipt Breakdown -->
+            <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl space-y-2 mb-6">
+                <div class="flex justify-between text-xs sm:text-sm text-slate-600">
+                    <span>CO (<span id="summaryQty">1</span> Pack):</span>
+                    <span id="summarySubtotal" class="font-bold text-slate-900">₦1,000</span>
+                </div>
+                <div class="flex justify-between text-xs sm:text-sm text-slate-600">
+                    <span>Delivery Fee (<span id="summaryZoneName">Elewuro Area</span>):</span>
+                    <span id="summaryDelivery" class="font-bold text-slate-900">₦1,000</span>
+                </div>
+                <div class="flex justify-between items-center pt-3 border-t border-slate-200 text-base sm:text-lg font-bold">
+                    <span class="text-slate-900">Total Payable:</span>
+                    <span id="summaryTotal" class="text-OGCO-primary font-black font-heading text-xl">₦2,000</span>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <button type="button" onclick="openPaymentModal()" class="w-full bg-OGCO-primary hover:bg-green-900 text-white font-black py-4 rounded-2xl shadow-xl shadow-OGCO-primary/25 transition-all text-base flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-lock text-sm"></i>
+                <span>Proceed to Pay & Send Order</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800 mt-12">
+        <p>&copy; 2026 OGCO — Enjoy the moment with CO.</p>
+    </footer>
+
+    <!-- PAYMENT MODAL (Enforces Payment Before WhatsApp Send) -->
+    <div id="paymentModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-green-100 text-OGCO-primary flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-building-columns text-sm"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 font-heading">Bank Transfer Checkout</h3>
+                </div>
+                <button onclick="closePaymentModal()" class="text-slate-400 hover:text-slate-700 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-600 mb-6 leading-relaxed">
+                To dispatch your order immediately, please transfer the exact total amount to our official business account below. Once payment is completed, click the confirmation button to send your receipt and order to our WhatsApp.
+            </p>
+
+            <!-- Bank Account Card -->
+            <div class="bg-OGCO-primary/5 border border-OGCO-primary/20 rounded-2xl p-4 mb-6 space-y-2 text-center">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-OGCO-primary block">Official Bank Details</span>
+                <p class="text-lg font-black text-slate-900 font-heading">Opay / Moniepoint</p>
+                <div class="flex items-center justify-center space-x-2">
+                    <span id="accountNumberText" class="text-xl font-black text-OGCO-primary font-heading tracking-wider">9030587036</span>
+                    <button onclick="copyAccountNumber()" class="text-xs bg-OGCO-primary text-white px-2 py-1 rounded-lg font-bold hover:bg-green-900">Copy</button>
+                </div>
+                <p class="text-xs text-slate-600 font-medium">Account Name: <strong>Muyiwa Ifakande</strong></p>
+            </div>
+
+            <!-- Amount Due Banner -->
+            <div class="flex justify-between items-center bg-slate-100 p-3.5 rounded-xl mb-6 text-sm font-bold">
+                <span class="text-slate-700">Amount to Transfer:</span>
+                <span id="modalTotalAmount" class="text-OGCO-primary font-black text-lg">₦2,000</span>
+            </div>
+
+            <!-- Confirmation Button -->
+            <button type="button" onclick="confirmPaymentAndSendWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-4 rounded-xl shadow-lg shadow-emerald-600/30 transition-all text-sm flex items-center justify-center space-x-2">
+                <i class="fa-brands fa-whatsapp text-xl"></i>
+                <span>I Have Paid — Send Order to WhatsApp</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let currentQuantity = 1;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Display unit price
+            document.getElementById('unitPriceDisplay').innerText = `₦${UNIT_PRICE.toLocaleString()} per pack`;
+
+            // Populate Delivery Zones Dropdown
+            const zoneSelect = document.getElementById('deliveryZone');
+            for (const [zoneName, fee] of Object.entries(deliveryZones)) {
+                const option = document.createElement('option');
+                option.value = zoneName;
+                option.setAttribute('data-fee', fee);
+                option.text = `${zoneName} (₦${fee.toLocaleString()})`;
+                zoneSelect.appendChild(option);
+            }
+
+            updateTotal();
+        });
+
+        // Adjust quantity (+ / -)
+        function adjustQuantity(change) {
+            currentQuantity += change;
+            if (currentQuantity < 1) currentQuantity = 1;
+            if (currentQuantity > 100) currentQuantity = 100;
+            
+            document.getElementById('displayQuantity').innerText = currentQuantity;
+            updateTotal();
+        }
+
+        // Calculate totals dynamically
+        function updateTotal() {
+            const zoneSelect = document.getElementById('deliveryZone');
+            const selectedOption = zoneSelect.options[zoneSelect.selectedIndex];
+            const deliveryFee = selectedOption ? parseInt(selectedOption.getAttribute('data-fee')) || 0 : 0;
+            const zoneName = selectedOption ? selectedOption.value : "Standard Delivery";
+
+            const subtotal = currentQuantity * UNIT_PRICE;
+            const grandTotal = subtotal + deliveryFee;
+
+            // Update UI elements
+            document.getElementById('summaryQty').innerText = currentQuantity;
+            document.getElementById('summarySubtotal').innerText = `₦${subtotal.toLocaleString()}`;
+            document.getElementById('summaryZoneName').innerText = zoneName;
+            document.getElementById('summaryDelivery').innerText = `₦${deliveryFee.toLocaleString()}`;
+            document.getElementById('summaryTotal').innerText = `₦${grandTotal.toLocaleString()}`;
+            document.getElementById('modalTotalAmount').innerText = `₦${grandTotal.toLocaleString()}`;
+        }
+
+        // Open Payment Modal after validating form
+        function openPaymentModal() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            if (!name || !phone || !address) {
+                alert('Please fill in your Name, Phone Number, and Delivery Address before proceeding.');
+                document.getElementById('orderForm').reportValidity();
+                return;
+            }
+
+            document.getElementById('paymentModal').classList.remove('hidden');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        }
+
+        // Copy Account Number helper
+        function copyAccountNumber() {
+            navigator.clipboard.writeText("9030587036").then(() => {
+                alert("Account number copied to clipboard!");
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+            alert("Account number copied to clipboard!");
+        }
+
+        // Final step: After payment is confirmed by user, send WhatsApp message
+        function confirmPaymentAndSendWhatsApp() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const zoneSelect = document.getElementById('deliveryZone');
+            const zoneName = zoneSelect.value;
+            const deliveryFee = parseInt(zoneSelect.options[zoneSelect.selectedIndex].getAttribute('data-fee'));
+            const address = document.getElementById('custAddress').value.trim();
+
+            const subtotal = currentQuantity * UNIT_PRICE;
+            const grandTotal = subtotal + deliveryFee;
+
+            // Formulate WhatsApp order message
+            const message = `🔔 *NEW PAID ORDER - OGCO* 🌿✨\n\n` +
+                `👤 *Customer Name:* ${name}\n` +
+                `📞 *Phone Number:* ${phone}\n` +
+                `📍 *Delivery Zone:* ${zoneName}\n` +
+                `🏠 *Delivery Address:* ${address}\n\n` +
+                `📦 *Order Details:*\n` +
+                `• Item: CO Leaves (Pack)\n` +
+                `• Quantity: ${currentQuantity} Pack(s)\n` +
+                `• Subtotal: ₦${subtotal.toLocaleString()}\n` +
+                `• Delivery Fee: ₦${deliveryFee.toLocaleString()}\n` +
+                `💰 *Total Paid:* ₦${grandTotal.toLocaleString()}\n\n` +
+                `✅ *Payment Status:* Transfer Completed. Please confirm and dispatch!`;
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
+            closePaymentModal();
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
