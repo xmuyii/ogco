@@ -1061,12 +1061,27 @@
         });
 
         // HIDDEN ADMIN DASHBOARD LOGIC
-        function triggerAdminLogin() {
+        async function triggerAdminLogin() {
             const pass = prompt("Enter OGCO Admin Security Passcode:");
-            if (pass === ADMIN_PASSCODE) {
-                openAdminModal();
-            } else if (pass !== null) {
-                alert("Access Denied: Invalid Passcode.");
+            if (pass === null) return; // Cancelled
+
+            try {
+                const response = await fetch('/api/verify-admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ passcode: pass })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    openAdminModal();
+                } else {
+                    alert("Access Denied: Invalid Passcode.");
+                }
+            } catch (err) {
+                console.error("Admin login error:", err);
+                alert("Server connection error verifying passcode.");
             }
         }
 

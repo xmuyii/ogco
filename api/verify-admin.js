@@ -1,25 +1,27 @@
 // api/verify-admin.js
 module.exports = (req, res) => {
-    // Enable CORS if needed
+    // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    );
+    res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
+        return res.status(200).end();
     }
 
     if (req.method !== 'POST') {
         return res.status(405).json({ success: false, message: 'Method not allowed' });
     }
 
-    const { passcode } = req.body || {};
-    const serverPasscode = process.env.ADMIN_PASSCODE || "ogco2026"; // Fallback for local testing
+    // Safely parse body whether Vercel parses it automatically or sends it as raw text
+    let body = req.body;
+    if (typeof body === 'string') {
+        try { body = JSON.parse(body); } catch (e) { body = {}; }
+    }
+
+    const passcode = body?.passcode;
+    const serverPasscode = process.env.ADMIN_PASSCODE || "ogco2026";
 
     if (passcode === serverPasscode) {
         return res.status(200).json({ success: true });
