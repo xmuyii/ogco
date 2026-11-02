@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGCO Gas Supply & Multi-Seller Marketplace</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            dark: '#0f172a',
+                            emerald: '#10b981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+            color: #f8fafc;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f97316;
+        }
+    </style>
+</head>
+<body class="antialiased bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">   
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <a href="#" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-orange-600/20">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-black tracking-wider text-white">OG<span class="text-orange-500">CO</span></span>
+                            <span class="block text-[10px] font-bold text-slate-400 tracking-widest uppercase">Verified Gas Merchants</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Live Online Visitor Counter Badge -->
+                <div class="hidden lg:flex items-center space-x-2 bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-full text-xs font-semibold">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-slate-300"><strong id="liveVisitorCount" class="text-emerald-400 font-extrabold">142</strong> Buyers Online Right Now</span>
+                </div>
+
+                <!-- Nav Links -->
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-300">
+                    <a href="#how-it-works" class="hover:text-orange-400 transition-colors"><i class="fa-solid fa-circle-info text-orange-500 mr-1.5"></i>How It Works</a>
+                    <a href="#merchants" class="hover:text-orange-400 transition-colors"><i class="fa-solid fa-users text-orange-500 mr-1.5"></i>Merchants</a>
+                    <a href="#seller-reviews" class="hover:text-orange-400 transition-colors"><i class="fa-solid fa-comments text-amber-400 mr-1.5"></i>Market Reviews</a>
+                    <a href="#become-seller" class="hover:text-orange-400 transition-colors text-amber-300 font-bold"><i class="fa-solid fa-store mr-1.5"></i>Become a Seller</a>
+                    <a href="#leaderboard" class="hover:text-orange-400 transition-colors"><i class="fa-solid fa-trophy text-amber-400 mr-1.5"></i>Leaderboard</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-12 lg:py-16 bg-slate-950 overflow-hidden border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="inline-flex items-center space-x-2 bg-orange-500/10 border border-orange-500/30 px-4 py-1.5 rounded-full text-xs text-orange-400 font-extrabold">
+                    <i class="fa-solid fa-location-dot text-orange-500"></i>
+                    <span>Direct Refill & Express Delivery Across Ibadan Neighborhoods</span>
+                </span>
+                <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                    Order Gas Direct From Verified <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-400">OGCO Merchants</span>
+                </h1>
+                <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                    Select your preferred merchant, pick your market tier (Normal, Better, Half Ball, or Full Ball), transfer directly to their bank account, and get express delivery right to your door in Ibadan.
+                </p>
+
+                <!-- Quick Stats & Trust Metrics -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto pt-6 border-t border-slate-800">
+                    <div>
+                        <p class="text-xl sm:text-2xl font-black text-white" id="statSellerCount">3 Active</p>
+                        <p class="text-xs text-slate-500 font-semibold">Verified Vendors</p>
+                    </div>
+                    <div>
+                        <p class="text-xl sm:text-2xl font-black text-emerald-400">1,000+</p>
+                        <p class="text-xs text-slate-500 font-semibold">Satisfied Clients</p>
+                    </div>
+                    <div>
+                        <p class="text-xl sm:text-2xl font-black text-amber-400">5.0 ★</p>
+                        <p class="text-xs text-slate-500 font-semibold">High Starting Rating</p>
+                    </div>
+                    <div>
+                        <p class="text-xl sm:text-2xl font-black text-orange-400">100%</p>
+                        <p class="text-xs text-slate-500 font-semibold">Verified Network</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-slate-900 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold text-orange-400 uppercase tracking-widest bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">Simple 3-Step Process</span>
+                <h2 class="text-3xl font-black text-white mt-3">How OGCO Gas Supply Works</h2>
+                <p class="text-slate-400 text-xs sm:text-sm mt-1">First time buying on our marketplace? Follow these 3 easy steps.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-slate-950 border border-slate-800 p-6 rounded-3xl relative hover:border-orange-500/40 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-500 text-slate-950 font-black flex items-center justify-center mb-4 text-xl shadow-lg shadow-orange-500/20">1</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Pick Your Preferred Seller</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Browse verified merchants like <strong>Iya Igbo</strong>, <strong>Starboy</strong>, or <strong>Peace</strong> and review customer comments on their market quality.</p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 p-6 rounded-3xl relative hover:border-orange-500/40 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-500 text-slate-950 font-black flex items-center justify-center mb-4 text-xl shadow-lg shadow-orange-500/20">2</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Choose Market Tier & Location</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Select ₦1,000 (Normal), ₦5,000 (Better), ₦25,000 (Half Ball), or ₦50,000 (Full Ball). Delivery fees calculate automatically based on your location (Olorunda/Idi Ape = ₦1,200 | Bodija/Challenge = ₦2,000 | Others = ₦1,000).</p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 p-6 rounded-3xl relative hover:border-emerald-500/40 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500 text-slate-950 font-black flex items-center justify-center mb-4 text-xl shadow-lg shadow-emerald-500/20">3</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Pay Direct & Send Receipt</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Transfer directly to the seller's displayed account number and click "Send Receipt on WhatsApp" for express dispatch. Don't forget to return to leave a review!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sellers Marketplace Section -->
+    <section id="merchants" class="py-16 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs font-bold text-orange-400 uppercase tracking-widest bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">Merchant Directory</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Select Your OGCO Vendor</h2>
+                    <p class="text-slate-400 text-sm mt-1">Click any active seller profile to select your quantity, enter location, and complete direct payment.</p>
+                </div>
+                <div class="mt-4 md:mt-0 text-xs text-slate-500 flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>All vendors available for immediate dispatch</span>
+                </div>
+            </div>
+
+            <!-- Seller Cards Grid -->
+            <div id="sellersContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamic Seller Injection -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Standard Price Packages Reference -->
+    <section id="pricing" class="py-16 bg-slate-900/60 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">Standard Rates</span>
+                <h2 class="text-3xl font-extrabold text-white mt-3">Available CO Price Tiers</h2>
+                <p class="text-slate-400 text-sm mt-1">Standardized market packages for fast refueling and batch orders.</p>
+            </div>
+
+            <div id="priceTiersContainer" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <!-- Dynamic Price Tiers Rendered Here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Public Seller Market Comments & Rating Submission Section -->
+    <section id="seller-reviews" class="py-16 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+                        <i class="fa-solid fa-comments mr-1"></i> Customer Feedback & Market Quality
+                    </span>
+                    <h2 class="text-3xl font-black text-white mt-3">Buyer Market Comments</h2>
+                    <p class="text-slate-400 text-sm mt-1">See what buyers are saying about the market quality from each seller or leave your own review.</p>
+                </div>
+                <!-- Filter Reviews By Seller -->
+                <div class="mt-4 md:mt-0">
+                    <select id="reviewFilterSeller" onchange="renderSellerComments()" class="bg-slate-900 border border-slate-800 text-white text-xs font-bold rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="ALL">Show All Seller Comments</option>
+                        <option value="Iya Igbo">Iya Igbo Reviews</option>
+                        <option value="Starboy">Starboy Reviews</option>
+                        <option value="Peace">Peace Reviews</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Left Column: Submit a Review Form -->
+                <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+                    <h3 class="text-lg font-bold text-white mb-1"><i class="fa-solid fa-pen-to-square text-orange-400 mr-2"></i>Drop Market Feedback</h3>
+                    <p class="text-xs text-slate-400 mb-6">Received your CO order? Tell other buyers about the seller and market quality.</p>
+
+                    <form id="commentSubmitForm" onsubmit="handleCommentSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Select Seller You Bought From</label>
+                            <select id="commentSellerTarget" required class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                                <option value="Iya Igbo">Iya Igbo</option>
+                                <option value="Starboy">Starboy</option>
+                                <option value="Peace">Peace</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Your Name & Delivery Location</label>
+                            <input type="text" id="commentAuthor" required placeholder="e.g. Samuel (Ojurin, Ibadan)" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Rating</label>
+                            <select id="commentRating" class="w-full bg-slate-950 border border-slate-800 text-amber-400 text-xs font-bold rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                                <option value="5">5 ★★★★★ (Excellent Quality Market)</option>
+                                <option value="4">4 ★★★★☆ (Very Good Market)</option>
+                                <option value="3">3 ★★★☆☆ (Average Market)</option>
+                                <option value="2">2 ★★☆☆☆ (Fair Market)</option>
+                                <option value="1">1 ★☆☆☆☆ (Poor Market Quality)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Comment On Market Nature / Delivery</label>
+                            <textarea id="commentText" rows="3" required placeholder="e.g. Very pure CO market, refill was fast at Ojurin delivery point..." class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-slate-950 font-black py-3 rounded-xl text-xs transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Post Seller Review</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right Column: Comments Feed -->
+                <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl max-h-[520px] overflow-y-auto">
+                    <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-comments text-amber-400 mr-2"></i>Recent Seller Reviews</h3>
+                    <div id="commentsFeedContainer" class="space-y-4">
+                        <!-- Dynamic Comments Rendered Here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ibadan Neighborhood Testimonials Section -->
+    <section class="py-16 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">Verified Delivery Experience</span>
+                <h2 class="text-3xl font-black text-white mt-3">Ibadan Neighborhood Testimonials</h2>
+                <p class="text-slate-400 text-xs sm:text-sm mt-1">Real feedback from clients across Ojurin, Olorunda, Elewuro, Isokan, Barracks, Idi Ape, Bodija, and Challenge.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl">
+                    <div class="flex items-center space-x-1 text-amber-400 text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Bought the Half Ball Market package from Iya Igbo. Fast dispatch down to Ojurin area within 45 minutes!"</p>
+                    <h5 class="text-xs font-bold text-white">Engr. Chukwudi</h5>
+                    <span class="text-[10px] text-orange-400 font-semibold">Ojurin, Ibadan (₦1,000 Transport)</span>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl">
+                    <div class="flex items-center space-x-1 text-amber-400 text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Starboy delivered my full ball market order straight to Olorunda & Elewuro axis. Very reliable merchant."</p>
+                    <h5 class="text-xs font-bold text-white">Alhaji Bello</h5>
+                    <p class="text-[10px] text-orange-400 font-semibold">Olorunda / Elewuro, Ibadan (₦1,200 Transport)</p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl">
+                    <div class="flex items-center space-x-1 text-amber-400 text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Peace handled my Challenge & Idi Ape refills smoothly. Top quality CO market and great customer communication."</p>
+                    <h5 class="text-xs font-bold text-white">Mrs. Mercy N.</h5>
+                    <p class="text-[10px] text-orange-400 font-semibold">Challenge / Idi Ape, Ibadan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Become a Registered Seller Section (Email Only) -->
+    <section id="become-seller" class="py-20 bg-gradient-to-br from-slate-900 via-slate-950 to-orange-950/20 border-t border-slate-800 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-slate-900/90 border border-orange-500/30 rounded-3xl p-8 sm:p-12 shadow-2xl backdrop-blur-xl">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+                        <i class="fa-solid fa-handshake mr-1"></i> Merchant Onboarding
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white mt-3">Become A Registered OGCO Seller</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                        Are you a verified gas supplier in Ibadan or surrounding areas? Apply strictly via email to join our marketplace.
+                    </p>
+                </div>
+
+                <form id="sellerApplyForm" onsubmit="event.preventDefault(); submitSellerApplication();" class="space-y-4">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Full Name</label>
+                            <input type="text" id="applyFullName" required placeholder="e.g. John Doe" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Proposed Business / Merchant Name</label>
+                            <input type="text" id="applyBusinessName" required placeholder="e.g. MaxGas Supplies" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Phone Number</label>
+                            <input type="tel" id="applyPhone" required placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Location / Neighborhood in Ibadan</label>
+                            <input type="text" id="applyLocation" required placeholder="e.g. Ojurin / Idi Ape, Ibadan" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Supply Capacity & Bank Details Note</label>
+                        <textarea id="applyCapacity" rows="3" required placeholder="Describe your gas supply capacity, bank name, and experience..." class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 focus:ring-2 focus:ring-orange-500 focus:outline-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-slate-950 font-black py-4 rounded-xl text-xs transition-all flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-envelope text-base"></i>
+                        <span>Send Merchant Application via Email (bambamwata7@gmail.com)</span>
+                    </button>
+                </form>
+
+                <!-- Dedicated Support Block -->
+                <div class="mt-8 pt-6 border-t border-slate-800/80 text-center">
+                    <p class="text-xs text-slate-400">
+                        <i class="fa-solid fa-circle-question text-orange-400 mr-1.5"></i>
+                        Do you have any questions? Email us directly at <a href="mailto:bambamwata7@gmail.com" class="text-amber-400 font-bold underline hover:text-orange-400">bambamwata7@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weekly Performance & Seller Leaderboard (Positioned near bottom) -->
+    <section id="leaderboard" class="py-16 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+                        <i class="fa-solid fa-chart-line mr-1"></i> Weekly Performance
+                    </span>
+                    <h2 class="text-3xl font-black text-white mt-3">Seller Rankings & Sales Trends</h2>
+                    <p class="text-slate-400 text-sm mt-1">Live order tracking, customer ratings, and rising/falling sales progress bars.</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-bold">
+                    <button onclick="toggleLeaderboardTimeframe('week')" id="btnRankWeek" class="px-4 py-2 rounded-lg bg-orange-600 text-slate-950 transition-all">This Week</button>
+                    <button onclick="toggleLeaderboardTimeframe('all')" id="btnRankAll" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-all">All-Time</button>
+                </div>
+            </div>
+
+            <!-- Leaderboard Table -->
+            <div class="bg-slate-950 border border-slate-800 rounded-3xl p-6 shadow-2xl overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="text-[10px] uppercase font-black text-slate-500 border-b border-slate-800 pb-3">
+                        <tr>
+                            <th class="py-3 px-4">Rank</th>
+                            <th class="py-3 px-4">Merchant</th>
+                            <th class="py-3 px-4">Orders Confirmed</th>
+                            <th class="py-3 px-4">Customer Rating</th>
+                            <th class="py-3 px-4">Sales Progress & Trend Bar</th>
+                            <th class="py-3 px-4 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody" class="divide-y divide-slate-800/60 font-semibold">
+                        <!-- Dynamic Leaderboard Content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- PURCHASE MODAL DRAWER -->
+    <div id="purchaseModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closePurchaseModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Seller Header in Modal -->
+            <div class="flex items-center space-x-4 pb-6 border-b border-slate-800">
+                <img id="modalSellerImg" src="" class="w-16 h-16 rounded-2xl object-cover border-2 border-orange-500">
+                <div>
+                    <span class="text-[10px] font-bold text-orange-400 uppercase tracking-wider bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">Selected Vendor</span>
+                    <h3 id="modalSellerName" class="text-xl font-extrabold text-white"></h3>
+                    <p id="modalSellerBio" class="text-xs text-slate-400 mt-0.5"></p>
+                </div>
+            </div>
+
+            <!-- Purchase Form inside Modal -->
+            <form id="purchaseForm" class="space-y-5 mt-6">
+                <!-- Package Select -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Select CO Amount / Package</label>
+                    <div id="modalPriceOptions" class="grid grid-cols-2 gap-3" onchange="calculateModalTotal()">
+                        <!-- Dynamic Radio Tiers -->
+                    </div>
+                </div>
+
+                <!-- Ibadan Delivery Neighborhood Select with Dynamic Fee Logic -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Ibadan Delivery Neighborhood (Transport Fee Applies)</label>
+                    <select id="modalLocation" required onchange="calculateModalTotal()" class="w-full bg-slate-950 border border-slate-800 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 font-semibold">
+                        <option value="Olorunda, Ibadan" data-fee="1200">Olorunda, Ibadan (₦1,200 Transport)</option>
+                        <option value="Idi Ape, Ibadan" data-fee="1200">Idi Ape, Ibadan (₦1,200 Transport)</option>
+                        <option value="Challenge, Ibadan" data-fee="2000">Challenge, Ibadan (₦2,000 Transport)</option>
+                        <option value="Bodija, Ibadan" data-fee="2000">Bodija, Ibadan (₦2,000 Transport)</option>
+                        <option value="Ojurin, Ibadan" data-fee="1000" selected>Ojurin, Ibadan (₦1,000 Transport)</option>
+                        <option value="Elewuro, Ibadan" data-fee="1000">Elewuro, Ibadan (₦1,000 Transport)</option>
+                        <option value="Isokan, Ibadan" data-fee="1000">Isokan, Ibadan (₦1,000 Transport)</option>
+                        <option value="Barracks, Ibadan" data-fee="1000">Barracks, Ibadan (₦1,000 Transport)</option>
+                        <option value="Other Location in Ibadan" data-fee="1000">Other Location (₦1,000 Transport)</option>
+                    </select>
+                </div>
+
+                <!-- Live Price Breakdown Summary Box -->
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-1.5 text-xs">
+                    <div class="flex justify-between text-slate-400">
+                        <span>Base Package Price:</span>
+                        <span id="summaryBasePrice" class="font-bold text-white">₦0</span>
+                    </div>
+                    <div class="flex justify-between text-slate-400">
+                        <span>Transport Delivery Fee:</span>
+                        <span id="summaryTransportFee" class="font-bold text-orange-400">₦1,000</span>
+                    </div>
+                    <div class="flex justify-between text-sm font-black text-white pt-2 border-t border-slate-800">
+                        <span>Total Payable Transfer:</span>
+                        <span id="summaryTotalPayable" class="text-amber-400">₦0</span>
+                    </div>
+                </div>
+
+                <!-- Customer Name / Contact -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Your Name / Phone Number</label>
+                    <input type="text" id="modalCustomerName" placeholder="e.g. Samuel (08012345678)" required class="w-full bg-slate-950 border border-slate-800 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+
+                <!-- Account Payment Details Card -->
+                <div class="bg-gradient-to-br from-slate-950 to-slate-900 border-2 border-orange-500/40 p-5 rounded-2xl space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Transfer Payment To:</span>
+                        <span id="modalBankName" class="text-xs font-extrabold text-amber-400 uppercase"></span>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] text-slate-500 block uppercase font-bold">Account Number</span>
+                            <span id="modalAccNumber" class="text-2xl font-black text-orange-400 tracking-wider"></span>
+                        </div>
+                        <button type="button" onclick="copyAccountNumber()" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1 border border-slate-700">
+                            <i class="fa-regular fa-copy text-orange-400"></i>
+                            <span id="copyBtnText">Copy</span>
+                        </button>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-800/80">
+                        <span class="text-[10px] text-slate-500 block uppercase font-bold">Account Name</span>
+                        <span id="modalAccName" class="text-xs font-bold text-slate-200"></span>
+                    </div>
+                </div>
+
+                <!-- Post-Purchase Rating Prompt Banner -->
+                <div class="bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl text-xs text-amber-300 flex items-start space-x-2">
+                    <i class="fa-solid fa-star text-amber-400 mt-0.5"></i>
+                    <span><strong>Post-Purchase Note:</strong> After receiving your order, please return to leave a rating and review for your seller!</span>
+                </div>
+
+                <!-- Submit WhatsApp Payment Confirmation -->
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-4 rounded-xl shadow-lg transition-all text-sm flex items-center justify-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                    <span>I Have Paid — Send Receipt on WhatsApp</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HIDDEN ADMIN DASHBOARD MODAL -->
+    <div id="adminModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="w-full max-w-4xl bg-slate-900 border border-orange-500/40 rounded-3xl p-6 sm:p-8 text-white shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6 sticky top-0 bg-slate-900 z-10">
+                <div>
+                    <h3 class="text-xl font-black text-orange-400"><i class="fa-solid fa-user-gear mr-2"></i>OGCO Hidden Admin Dashboard</h3>
+                    <p class="text-xs text-slate-400">Manage seller accounts, edit bank details, set restrictions/bans, and control price packages.</p>
+                </div>
+                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Admin Section 1: Price Tiers Manager -->
+                <div>
+                    <h4 class="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">1. Manage CO Price Tiers</h4>
+                    <div id="adminPricesList" class="space-y-2 mb-3"></div>
+                    <div class="flex gap-2">
+                        <input type="number" id="newTierInput" placeholder="New price tier e.g. 10000" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs w-full text-white">
+                        <input type="text" id="newTierLabel" placeholder="Tier Name e.g. Quarter Ball" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs w-full text-white">
+                        <button onclick="addPriceTier()" class="bg-orange-600 hover:bg-orange-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs whitespace-nowrap">Add Tier</button>
+                    </div>
+                </div>
+
+                <!-- Admin Section 2: Seller Profiles Editor & Restriction Controls -->
+                <div class="pt-6 border-t border-slate-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs font-bold text-orange-400 uppercase tracking-widest">2. Manage Sellers & Restricted Status</h4>
+                        <button onclick="addNewSellerPrompt()" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center space-x-1">
+                            <i class="fa-solid fa-plus"></i><span>Create New Seller Profile</span>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Admin Sellers Table -->
+                    <div id="adminSellersList" class="space-y-4"></div>
+                </div>
+            </div>
+
+            <!-- Admin Footer Actions -->
+            <div class="flex items-center justify-between pt-6 mt-6 border-t border-slate-800 sticky bottom-0 bg-slate-900">
+                <button onclick="resetAllDefaults()" class="text-xs text-rose-400 hover:underline">Reset System to Default</button>
+                <button onclick="closeAdminModal()" class="bg-slate-800 hover:bg-slate-700 px-6 py-2.5 rounded-xl text-xs font-bold text-white">Close Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="bg-slate-900 py-10 border-t border-slate-800 relative text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2026 OGCO Supply Network. All rights reserved.</p>
+            <p class="mt-2 text-slate-600">Pure Carbon Monoxide & Industrial Gas Distribution Across Ibadan, Nigeria.</p>
+        </div>
+
+        <!-- HIDDEN ADMIN LINK AT EXTREME BOTTOM-LEFT CORNER -->
+        <div class="absolute bottom-3 left-4">
+            <button onclick="triggerAdminLogin()" class="text-[10px] text-slate-700 hover:text-orange-400 transition-colors font-mono tracking-wider opacity-60 hover:opacity-100">
+                v1.0 2026
+            </button>
+        </div>
+    </footer>
+
+    <!-- SCRIPT LOGIC -->
+    <script>
+        // Initial Default Sellers
+        const defaultSellers = [
+            {
+                id: "seller_1",
+                name: "Iya Igbo",
+                bio: "Top rated OGCO distributor across Ojurin, Olorunda & Ibadan axis.",
+                image: "img/iyaigbo.jpg",
+                bankName: "Moniepoint MFB",
+                accountNumber: "8180085401",
+                accountName: "Iya Igbo OGCO Store",
+                phone: "2348180085401",
+                weeklyOrders: 120,
+                allTimeOrders: 540,
+                ratingScore: 5.0,
+                ratingCount: 18,
+                progressPercent: 85,
+                restricted: false
+            },
+            {
+                id: "seller_2",
+                name: "Starboy",
+                bio: "Fast delivery for Elewuro, Isokan & Ibadan Central.",
+                image: "img/starboy.jpg",
+                bankName: "Kuda Bank",
+                accountNumber: "2019883410",
+                accountName: "Starboy Gas Enterprise",
+                phone: "2348180085401",
+                weeklyOrders: 95,
+                allTimeOrders: 410,
+                ratingScore: 5.0,
+                ratingCount: 14,
+                progressPercent: 72,
+                restricted: false
+            },
+            {
+                id: "seller_3",
+                name: "Peace",
+                bio: "Express gas refill & delivery across Barracks, Idi Ape & Bodija.",
+                image: "img/peace.jpg",
+                bankName: "Wema Bank",
+                accountNumber: "0249118502",
+                accountName: "Peace OGCO Logistics",
+                phone: "2348180085401",
+                weeklyOrders: 80,
+                allTimeOrders: 320,
+                ratingScore: 5.0,
+                ratingCount: 11,
+                progressPercent: 60,
+                restricted: false
+            }
+        ];
+
+        // Default Comments
+        const defaultComments = [
+            {
+                id: "c1",
+                sellerName: "Iya Igbo",
+                author: "Tunde A. (Ojurin, Ibadan)",
+                rating: 5,
+                text: "The Half Ball Market gas package arrived super pure and fast at Ojurin! Smooth payment transfer to Moniepoint.",
+                date: "Recent"
+            },
+            {
+                id: "c2",
+                sellerName: "Starboy",
+                author: "Kazeem (Elewuro, Ibadan)",
+                rating: 5,
+                text: "Full Ball Market supply delivered right on time near Elewuro. Highly recommend Starboy!",
+                date: "Recent"
+            },
+            {
+                id: "c3",
+                sellerName: "Peace",
+                author: "Bisi (Idi Ape, Ibadan)",
+                rating: 5,
+                text: "Peace is very polite and reliable. Gas quality is 100% top notch around Idi Ape.",
+                date: "Recent"
+            }
+        ];
+
+        // Custom Market Tier Packages
+        const defaultPrices = [
+            { id: "p1", amount: 1000, label: "Normal Market" },
+            { id: "p2", amount: 5000, label: "Better Market" },
+            { id: "p3", amount: 25000, label: "Half Ball Market" },
+            { id: "p4", amount: 50000, label: "Full Ball Market" }
+        ];
+
+        function getSellers() {
+            const saved = localStorage.getItem('ogco_sellers_v2');
+            try { 
+                if (!saved) return defaultSellers;
+                return JSON.parse(saved); 
+            } catch(e) { return defaultSellers; }
+        }
+
+        function saveSellers(sellers) {
+            localStorage.setItem('ogco_sellers_v2', JSON.stringify(sellers));
+        }
+
+        function getComments() {
+            const saved = localStorage.getItem('ogco_comments');
+            try { return saved ? JSON.parse(saved) : defaultComments; } catch(e) { return defaultComments; }
+        }
+
+        function getPrices() {
+            const saved = localStorage.getItem('ogco_prices');
+            try { 
+                const parsed = saved ? JSON.parse(saved) : defaultPrices;
+                if (parsed.length > 0 && typeof parsed[0] === 'number') {
+                    localStorage.removeItem('ogco_prices');
+                    return defaultPrices;
+                }
+                return parsed; 
+            } catch(e) { return defaultPrices; }
+        }
+
+        function savePrices(prices) {
+            localStorage.setItem('ogco_prices', JSON.stringify(prices));
+        }
+
+        let activeSelectedSeller = null;
+        let activeLeaderboardTab = 'week';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSellers();
+            renderPriceTiers();
+            renderLeaderboard();
+            renderSellerComments();
+            startLiveCounterSimulation();
+        });
+
+        function startLiveCounterSimulation() {
+            const el = document.getElementById('liveVisitorCount');
+            if (!el) return;
+            setInterval(() => {
+                const current = parseInt(el.innerText) || 142;
+                const change = Math.floor(Math.random() * 7) - 3;
+                const nextVal = Math.max(120, current + change);
+                el.innerText = nextVal;
+            }, 4000);
+        }
+
+        function renderSellers() {
+            const sellers = getSellers();
+            const container = document.getElementById('sellersContainer');
+            if (!container) return;
+            
+            const activeCount = sellers.filter(s => !s.restricted).length;
+            document.getElementById('statSellerCount').innerText = `${activeCount} Active`;
+            container.innerHTML = '';
+
+            sellers.forEach(seller => {
+                const isRestricted = seller.restricted === true;
+                const card = document.createElement('div');
+                card.className = `bg-slate-900 border ${isRestricted ? 'border-rose-900/60 opacity-65' : 'border-slate-800 hover:border-orange-500/60'} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group relative`;
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-64 overflow-hidden bg-slate-950">
+                            <img src="${seller.image}" alt="${seller.name}" class="w-full h-full object-cover object-center ${isRestricted ? 'grayscale' : 'group-hover:scale-105'} transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                            
+                            ${isRestricted ? `
+                                <span class="absolute top-4 right-4 bg-rose-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow">
+                                    <i class="fa-solid fa-ban mr-1"></i>Restricted Account
+                                </span>
+                            ` : `
+                                <span class="absolute top-4 right-4 bg-emerald-500/90 text-slate-950 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow">
+                                    <i class="fa-solid fa-circle-check mr-1"></i>Verified Seller
+                                </span>
+                            `}
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="text-2xl font-black text-white group-hover:text-orange-400 transition-colors">${seller.name}</h3>
+                                <span class="text-xs font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full">${(seller.ratingScore || 5.0).toFixed(1)} ★</span>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">${seller.bio}</p>
+                            <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3 space-y-1 mb-4">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase">Direct Bank Account</span>
+                                <div class="text-xs font-bold text-amber-400 flex justify-between">
+                                    <span>${seller.bankName}</span>
+                                    <span>${seller.accountNumber}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        ${isRestricted ? `
+                            <button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-3.5 rounded-xl text-xs cursor-not-allowed flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-lock"></i>
+                                <span>Seller Temporarily Unavailable</span>
+                            </button>
+                        ` : `
+                            <button onclick="openPurchaseModal('${seller.id}')" class="w-full bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-slate-950 font-black py-3.5 rounded-xl text-xs transition-all flex items-center justify-center space-x-2 shadow-lg shadow-orange-600/20">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span>Buy From ${seller.name}</span>
+                            </button>
+                        `}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderPriceTiers() {
+            const prices = getPrices();
+            const container = document.getElementById('priceTiersContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            prices.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center hover:border-orange-500/40 transition-all";
+                card.innerHTML = `
+                    <span class="text-[10px] font-bold text-orange-400 uppercase tracking-widest bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/20">${p.label || 'CO Tier'}</span>
+                    <h4 class="text-2xl font-black text-white mt-3 mb-1">₦${p.amount.toLocaleString()}</h4>
+                    <p class="text-[11px] text-slate-400 font-semibold">${p.label || 'Market Refill'}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderLeaderboard() {
+            const sellers = getSellers();
+            const tbody = document.getElementById('leaderboardBody');
+            if (!tbody) return;
+
+            const sorted = [...sellers].sort((a, b) => {
+                const orderA = activeLeaderboardTab === 'week' ? (a.weeklyOrders || 0) : (a.allTimeOrders || 0);
+                const orderB = activeLeaderboardTab === 'week' ? (b.weeklyOrders || 0) : (b.allTimeOrders || 0);
+                return orderB - orderA;
+            });
+
+            tbody.innerHTML = '';
+            sorted.forEach((seller, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-900/50 transition-colors";
+
+                const rankBadge = idx === 0 
+                    ? `<span class="w-6 h-6 rounded-full bg-amber-400 text-slate-950 font-black flex items-center justify-center text-xs shadow">1</span>`
+                    : idx === 1 
+                    ? `<span class="w-6 h-6 rounded-full bg-slate-300 text-slate-950 font-black flex items-center justify-center text-xs">2</span>`
+                    : idx === 2
+                    ? `<span class="w-6 h-6 rounded-full bg-amber-700 text-white font-black flex items-center justify-center text-xs">3</span>`
+                    : `<span class="text-slate-500 font-bold ml-2">#${idx + 1}</span>`;
+
+                const displayOrders = activeLeaderboardTab === 'week' ? (seller.weeklyOrders || 120) : (seller.allTimeOrders || 540);
+                const progress = seller.progressPercent || Math.max(30, 95 - (idx * 15));
+
+                tr.innerHTML = `
+                    <td class="py-4 px-4">${rankBadge}</td>
+                    <td class="py-4 px-4">
+                        <div class="flex items-center space-x-3">
+                            <img src="${seller.image}" class="w-8 h-8 rounded-lg object-cover border border-slate-700">
+                            <div>
+                                <span class="text-white font-black block">${seller.name} ${seller.restricted ? '<span class="text-[9px] text-rose-400">(Restricted)</span>' : ''}</span>
+                                <span class="text-[10px] text-slate-500">${seller.bankName}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-4 text-white font-bold">${displayOrders.toLocaleString()} Orders</td>
+                    <td class="py-4 px-4 text-amber-400 font-extrabold">${(seller.ratingScore || 5.0).toFixed(1)} ★</td>
+                    <td class="py-4 px-4">
+                        <div class="w-36 space-y-1">
+                            <div class="flex justify-between text-[10px] text-slate-400 font-bold">
+                                <span>Sales Vol</span>
+                                <span class="text-emerald-400">${progress}%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-orange-500 to-amber-400 rounded-full" style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-4 text-right">
+                        ${seller.restricted ? `
+                            <span class="text-[10px] text-slate-500">Disabled</span>
+                        ` : `
+                            <button onclick="openPurchaseModal('${seller.id}')" class="bg-orange-500/10 border border-orange-500/30 text-orange-400 hover:bg-orange-500 hover:text-slate-950 px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all">
+                                Order Now
+                            </button>
+                        `}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderSellerComments() {
+            const comments = getComments();
+            const filter = document.getElementById('reviewFilterSeller')?.value || 'ALL';
+            const container = document.getElementById('commentsFeedContainer');
+            if (!container) return;
+
+            const filtered = filter === 'ALL' ? comments : comments.filter(c => c.sellerName === filter);
+            container.innerHTML = '';
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p class="text-slate-500 text-xs text-center py-8">No comments recorded yet for this seller. Be the first to leave a review!</p>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "bg-slate-950 border border-slate-800/80 p-4 rounded-2xl space-y-2";
+                const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+                div.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-black text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">${item.sellerName}</span>
+                            <span class="text-xs font-bold text-white">${item.author}</span>
+                        </div>
+                        <span class="text-amber-400 text-xs font-bold">${stars}</span>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed italic">"${item.text}"</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function handleCommentSubmit(e) {
+            e.preventDefault();
+            const sellerTarget = document.getElementById('commentSellerTarget').value;
+            const author = document.getElementById('commentAuthor').value.trim();
+            const rating = parseInt(document.getElementById('commentRating').value);
+            const text = document.getElementById('commentText').value.trim();
+
+            if (!author || !text) return;
+
+            const comments = getComments();
+            comments.unshift({
+                id: 'c_' + Date.now(),
+                sellerName: sellerTarget,
+                author,
+                rating,
+                text,
+                date: 'Just now'
+            });
+            localStorage.setItem('ogco_comments', JSON.stringify(comments));
+
+            const sellers = getSellers();
+            const targetSeller = sellers.find(s => s.name === sellerTarget);
+            if (targetSeller) {
+                const sellerComments = comments.filter(c => c.sellerName === sellerTarget);
+                const avgRating = sellerComments.reduce((acc, c) => acc + c.rating, 0) / sellerComments.length;
+                targetSeller.ratingScore = parseFloat(avgRating.toFixed(1));
+                targetSeller.ratingCount = sellerComments.length;
+                saveSellers(sellers);
+            }
+
+            document.getElementById('commentAuthor').value = '';
+            document.getElementById('commentText').value = '';
+            renderSellerComments();
+            renderSellers();
+            renderLeaderboard();
+            alert(`Thank you! Your market review for ${sellerTarget} has been recorded.`);
+        }
+
+        function toggleLeaderboardTimeframe(tab) {
+            activeLeaderboardTab = tab;
+            const btnWeek = document.getElementById('btnRankWeek');
+            const btnAll = document.getElementById('btnRankAll');
+
+            if (tab === 'week') {
+                btnWeek.className = "px-4 py-2 rounded-lg bg-orange-600 text-slate-950 font-bold transition-all";
+                btnAll.className = "px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-all";
+            } else {
+                btnAll.className = "px-4 py-2 rounded-lg bg-orange-600 text-slate-950 font-bold transition-all";
+                btnWeek.className = "px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-all";
+            }
+            renderLeaderboard();
+        }
+
+        function openPurchaseModal(sellerId) {
+            const sellers = getSellers();
+            const seller = sellers.find(s => s.id === sellerId);
+            if (!seller || seller.restricted) return;
+
+            activeSelectedSeller = seller;
+            document.getElementById('modalSellerImg').src = seller.image;
+            document.getElementById('modalSellerName').innerText = seller.name;
+            document.getElementById('modalSellerBio').innerText = seller.bio;
+            document.getElementById('modalBankName').innerText = seller.bankName;
+            document.getElementById('modalAccNumber').innerText = seller.accountNumber;
+            document.getElementById('modalAccName').innerText = seller.accountName;
+
+            const prices = getPrices();
+            const priceOptions = document.getElementById('modalPriceOptions');
+            priceOptions.innerHTML = '';
+
+            prices.forEach((p, idx) => {
+                const label = document.createElement('label');
+                label.className = "flex items-center space-x-2 bg-slate-950 border border-slate-800 p-3 rounded-xl cursor-pointer hover:border-orange-500/50 transition-all";
+                label.innerHTML = `
+                    <input type="radio" name="selectedAmount" value="${p.amount}" data-label="${p.label}" ${idx === 0 ? 'checked' : ''} class="text-orange-500 focus:ring-orange-500">
+                    <div>
+                        <span class="text-xs font-extrabold text-white block">₦${p.amount.toLocaleString()}</span>
+                        <span class="text-[9px] text-orange-400 font-semibold block">${p.label}</span>
+                    </div>
+                `;
+                priceOptions.appendChild(label);
+            });
+
+            calculateModalTotal();
+            document.getElementById('purchaseModal').classList.remove('hidden');
+        }
+
+        // Location Dynamic Transport Fee Calculation Logic
+        function calculateModalTotal() {
+            const checkedRadio = document.querySelector('input[name="selectedAmount"]:checked');
+            const baseAmount = checkedRadio ? parseInt(checkedRadio.value) || 0 : 0;
+
+            const locationSelect = document.getElementById('modalLocation');
+            const selectedOption = locationSelect.options[locationSelect.selectedIndex];
+            const transportFee = parseInt(selectedOption?.getAttribute('data-fee') || '1000');
+
+            const total = baseAmount + transportFee;
+
+            document.getElementById('summaryBasePrice').innerText = `₦${baseAmount.toLocaleString()}`;
+            document.getElementById('summaryTransportFee').innerText = `₦${transportFee.toLocaleString()}`;
+            document.getElementById('summaryTotalPayable').innerText = `₦${total.toLocaleString()}`;
+        }
+
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').classList.add('hidden');
+            document.getElementById('copyBtnText').innerText = "Copy";
+        }
+
+        function copyAccountNumber() {
+            const acc = document.getElementById('modalAccNumber').innerText;
+            navigator.clipboard.writeText(acc);
+            document.getElementById('copyBtnText').innerText = "Copied!";
+            setTimeout(() => { document.getElementById('copyBtnText').innerText = "Copy"; }, 2000);
+        }
+
+        function submitSellerApplication() {
+            const name = document.getElementById('applyFullName').value.trim();
+            const business = document.getElementById('applyBusinessName').value.trim();
+            const phone = document.getElementById('applyPhone').value.trim();
+            const location = document.getElementById('applyLocation').value.trim();
+            const capacity = document.getElementById('applyCapacity').value.trim();
+
+            if (!name || !business || !phone) {
+                alert("Please fill in your name, business name, and phone number.");
+                return;
+            }
+
+            const recipientEmail = "bambamwata7@gmail.com";
+            const subject = `OGCO Registered Seller Application - ${business}`;
+            const body = `Hello OGCO Admin Team,\n\nI would like to apply as a registered OGCO gas seller on your marketplace website.\n\nHere are my application details:\n• Full Name: ${name}\n• Business / Merchant Name: ${business}\n• Phone Number: ${phone}\n• Operating Neighborhood (Ibadan): ${location}\n• Supply Capacity / Note:\n${capacity}\n\nPlease review my application and send onboarding instructions. Thank you!`;
+
+            const mailtoUrl = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoUrl;
+        }
+
+        document.getElementById('purchaseForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!activeSelectedSeller) return;
+
+            const checkedRadio = document.querySelector('input[name="selectedAmount"]:checked');
+            const baseAmount = checkedRadio ? parseInt(checkedRadio.value) || 0 : 0;
+            const packageLabel = checkedRadio ? checkedRadio.getAttribute('data-label') : '';
+
+            const locationSelect = document.getElementById('modalLocation');
+            const selectedOption = locationSelect.options[locationSelect.selectedIndex];
+            const transportFee = parseInt(selectedOption?.getAttribute('data-fee') || '1000');
+            const locationName = locationSelect.value;
+            const customerName = document.getElementById('modalCustomerName').value;
+
+            const total = baseAmount + transportFee;
+
+            const sellers = getSellers();
+            const sellerToUpdate = sellers.find(s => s.id === activeSelectedSeller.id);
+            if (sellerToUpdate) {
+                sellerToUpdate.weeklyOrders = (sellerToUpdate.weeklyOrders || 0) + 1;
+                sellerToUpdate.allTimeOrders = (sellerToUpdate.allTimeOrders || 0) + 1;
+                sellerToUpdate.progressPercent = Math.min(100, (sellerToUpdate.progressPercent || 50) + 2);
+                saveSellers(sellers);
+            }
+
+            const msg = `Hello ${activeSelectedSeller.name}! 🔥\n\nI have transferred payment for an OGCO Gas Order:\n\n• *Package Tier:* ₦${baseAmount.toLocaleString()} (${packageLabel})\n• *Location:* ${locationName}\n• *Transport Fee:* ₦${transportFee.toLocaleString()}\n• *Total Paid:* ₦${total.toLocaleString()}\n• *Customer Name / Contact:* ${customerName}\n• *Transferred To:* ${activeSelectedSeller.bankName} (${activeSelectedSeller.accountNumber})\n\nPlease confirm payment receipt and dispatch my order! Thanks.`;
+
+            window.open(`https://wa.me/${activeSelectedSeller.phone || '2348180085401'}?text=${encodeURIComponent(msg)}`, '_blank');
+            closePurchaseModal();
+            renderSellers();
+            renderLeaderboard();
+        });
+
+        // HIDDEN ADMIN DASHBOARD LOGIC
+        function triggerAdminLogin() {
+            const pass = prompt("Enter OGCO Admin Security Passcode:");
+            if (pass === ADMIN_PASSCODE) {
+                openAdminModal();
+            } else if (pass !== null) {
+                alert("Access Denied: Invalid Passcode.");
+            }
+        }
+
+        function openAdminModal() {
+            renderAdminPrices();
+            renderAdminSellers();
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function renderAdminPrices() {
+            const prices = getPrices();
+            const container = document.getElementById('adminPricesList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            prices.forEach((p, idx) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs";
+                div.innerHTML = `
+                    <span class="font-bold text-white">₦${p.amount.toLocaleString()} - ${p.label}</span>
+                    <button onclick="removePriceTier(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[10px]">Remove</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addPriceTier() {
+            const input = document.getElementById('newTierInput');
+            const labelInput = document.getElementById('newTierLabel');
+            const val = parseInt(input.value);
+            const label = labelInput.value.trim() || "Market Package";
+
+            if (!val) return;
+            const prices = getPrices();
+            prices.push({ id: 'p_' + Date.now(), amount: val, label });
+            savePrices(prices);
+            input.value = '';
+            labelInput.value = '';
+            renderAdminPrices();
+            renderPriceTiers();
+        }
+
+        function removePriceTier(idx) {
+            const prices = getPrices();
+            prices.splice(idx, 1);
+            savePrices(prices);
+            renderAdminPrices();
+            renderPriceTiers();
+        }
+
+        function renderAdminSellers() {
+            const sellers = getSellers();
+            const container = document.getElementById('adminSellersList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            sellers.forEach((seller, idx) => {
+                const div = document.createElement('div');
+                div.className = "bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-3";
+                div.innerHTML = `
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <img src="${seller.image}" class="w-10 h-10 rounded-xl object-cover border border-slate-700">
+                            <div>
+                                <h5 class="text-sm font-bold text-white">${seller.name}</h5>
+                                <span class="text-[10px] text-slate-400">${seller.bankName} - ${seller.accountNumber}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="toggleSellerRestriction(${idx})" class="px-3 py-1 rounded-lg text-[10px] font-bold ${seller.restricted ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-amber-500/20 text-amber-400 border border-amber-500/40'}">
+                                ${seller.restricted ? 'Unrestrict' : 'Ban / Restrict'}
+                            </button>
+                            <button onclick="deleteSeller(${idx})" class="bg-rose-500/20 text-rose-400 border border-rose-500/40 px-3 py-1 rounded-lg text-[10px] font-bold">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Editable Fields -->
+                    <div class="grid sm:grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <label class="block text-[9px] text-slate-500 uppercase font-bold">Bank Name</label>
+                            <input type="text" value="${seller.bankName}" onchange="updateSellerField(${idx}, 'bankName', this.value)" class="w-full bg-slate-900 border border-slate-800 text-white p-2 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-slate-500 uppercase font-bold">Account Number</label>
+                            <input type="text" value="${seller.accountNumber}" onchange="updateSellerField(${idx}, 'accountNumber', this.value)" class="w-full bg-slate-900 border border-slate-800 text-white p-2 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-slate-500 uppercase font-bold">Account Name</label>
+                            <input type="text" value="${seller.accountName}" onchange="updateSellerField(${idx}, 'accountName', this.value)" class="w-full bg-slate-900 border border-slate-800 text-white p-2 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-slate-500 uppercase font-bold">WhatsApp Phone</label>
+                            <input type="text" value="${seller.phone}" onchange="updateSellerField(${idx}, 'phone', this.value)" class="w-full bg-slate-900 border border-slate-800 text-white p-2 rounded-lg">
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateSellerField(idx, field, value) {
+            const sellers = getSellers();
+            sellers[idx][field] = value;
+            saveSellers(sellers);
+            renderSellers();
+            renderLeaderboard();
+        }
+
+        function toggleSellerRestriction(idx) {
+            const sellers = getSellers();
+            sellers[idx].restricted = !sellers[idx].restricted;
+            saveSellers(sellers);
+            renderAdminSellers();
+            renderSellers();
+            renderLeaderboard();
+        }
+
+        function deleteSeller(idx) {
+            if (!confirm("Are you sure you want to delete this seller profile?")) return;
+            const sellers = getSellers();
+            sellers.splice(idx, 1);
+            saveSellers(sellers);
+            renderAdminSellers();
+            renderSellers();
+            renderLeaderboard();
+        }
+
+        function addNewSellerPrompt() {
+            const name = prompt("Enter New Seller Name:");
+            if (!name) return;
+            const bankName = prompt("Enter Bank Name:", "Moniepoint MFB") || "Moniepoint MFB";
+            const accountNumber = prompt("Enter Account Number:", "0000000000") || "0000000000";
+            const accountName = prompt("Enter Account Holder Name:", name + " OGCO Store") || name;
+            const phone = prompt("Enter WhatsApp Phone Number (with country code):", "2348180085401") || "2348180085401";
+
+            const sellers = getSellers();
+            sellers.push({
+                id: 'seller_' + Date.now(),
+                name,
+                bio: "Verified OGCO gas vendor serving Ibadan.",
+                image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=400",
+                bankName,
+                accountNumber,
+                accountName,
+                phone,
+                weeklyOrders: 10,
+                allTimeOrders: 50,
+                ratingScore: 5.0,
+                ratingCount: 1,
+                progressPercent: 50,
+                restricted: false
+            });
+
+            saveSellers(sellers);
+            renderAdminSellers();
+            renderSellers();
+            renderLeaderboard();
+        }
+
+        function resetAllDefaults() {
+            if (!confirm("Reset all sellers and prices to default settings?")) return;
+            localStorage.removeItem('ogco_sellers_v2');
+            localStorage.removeItem('ogco_prices');
+            localStorage.removeItem('ogco_comments');
+            location.reload();
+        }
+    </script>
+</body>
+</html>
