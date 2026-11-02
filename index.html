@@ -628,9 +628,9 @@
             {
                 id: "c1",
                 sellerName: "Iya Igbo",
-                author: "Tunde A. (Ojurin, Ibadan)",
+                author: "Tunde A. (Iwo Road, Ibadan)",
                 rating: 5,
-                text: "The Half Ball Market gas package arrived super pure and fast at Ojurin! Smooth payment transfer to Moniepoint.",
+                text: "The Half Ball Market package arrived super pure and fast to iwo road! Smooth payment transfer to Moniepoint.",
                 date: "Recent"
             },
             {
@@ -646,7 +646,7 @@
                 sellerName: "Peace",
                 author: "Bisi (Idi Ape, Ibadan)",
                 rating: 5,
-                text: "Peace is very polite and reliable. Gas quality is 100% top notch around Idi Ape.",
+                text: "Peace is very polite and reliable. Market quality is 100% top notch around Idi Ape.",
                 date: "Recent"
             }
         ];
@@ -726,12 +726,12 @@
             sellers.forEach(seller => {
                 const isRestricted = seller.restricted === true;
                 const card = document.createElement('div');
-                card.className = `bg-slate-900 border ${isRestricted ? 'border-rose-900/60 opacity-65' : 'border-slate-800 hover:border-orange-500/60'} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group relative`;
+                card.className = `bg-slate-900 border ${isRestricted ? 'border-rose-900/60 opacity-65' : 'border-slate-800 hover:border-orange-500/60'} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group relative h-full`;
                 
                 card.innerHTML = `
                     <div>
-                        <div class="relative h-64 overflow-hidden bg-slate-950">
-                            <img src="${seller.image}" alt="${seller.name}" class="w-full h-full object-cover object-center ${isRestricted ? 'grayscale' : 'group-hover:scale-105'} transition-transform duration-500">
+                        <div class="relative h-64 overflow-hidden bg-slate-950 flex items-center justify-center">
+                            <img src="${seller.image}" alt="${seller.name}" class="w-full h-full object-cover object-top ${isRestricted ? 'grayscale' : 'group-hover:scale-105'} transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                             
                             ${isRestricted ? `
@@ -776,7 +776,7 @@
                 container.appendChild(card);
             });
         }
-
+        
         function renderPriceTiers() {
             const prices = getPrices();
             const container = document.getElementById('priceTiersContainer');
