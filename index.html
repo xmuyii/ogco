@@ -587,18 +587,27 @@
 
     // 1. Fetch Sellers from Supabase
     async function getSellers() {
-        const { data, error } = await _supabase.from('sellers').select('*');
-        if (error) {
-            console.error("Error fetching sellers:", error);
-            return [];
-        }
-        // Fallback to defaultSellers if table is empty
-        if (!data || data.length === 0) {
-            await seedDefaultSellers();
-            return defaultSellers;
-        }
-        return data;
-    }
+    const { data, error } = await _supabase.from('sellers').select('*');
+    if (error || !data || data.length === 0) return defaultSellers;
+    
+    // Map database snake_case back to camelCase for the template
+    return data.map(item => ({
+        id: item.id,
+        name: item.name,
+        bio: item.bio,
+        image: item.image,
+        bankName: item.bank_name || item.bankName,
+        accountNumber: item.account_number || item.accountNumber,
+        accountName: item.account_name || item.accountName,
+        phone: item.phone,
+        weeklyOrders: item.weekly_orders,
+        allTimeOrders: item.all_time_orders,
+        ratingScore: item.rating_score,
+        ratingCount: item.rating_count,
+        progressPercent: item.progress_percent,
+        restricted: item.restricted
+    }));
+}
 
     // Seed initial default sellers if table is empty
     async function seedDefaultSellers() {
@@ -786,67 +795,71 @@
         }
 
         function renderSellers() {
-            const sellers = getSellers();
-            const container = document.getElementById('sellersContainer');
-            if (!container) return;
-            
-            const activeCount = sellers.filter(s => !s.restricted).length;
-            document.getElementById('statSellerCount').innerText = `${activeCount} Active`;
-            container.innerHTML = '';
+    // window.sellersData is populated by await getSellers() from Supabase
+    const sellers = window.sellersData || [];
+    const container = document.getElementById('sellersContainer');
+    if (!container) return;
+    
+    const activeCount = sellers.filter(s => !s.restricted).length;
+    const statEl = document.getElementById('statSellerCount');
+    if (statEl) statEl.innerText = `${activeCount} Active`;
 
-            sellers.forEach(seller => {
-                const isRestricted = seller.restricted === true;
-                const card = document.createElement('div');
-                card.className = `bg-slate-900 border ${isRestricted ? 'border-rose-900/60 opacity-65' : 'border-slate-800 hover:border-orange-500/60'} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group relative h-full`;
-                
-                card.innerHTML = `
-                    <div>
-                        <div class="relative h-64 overflow-hidden bg-slate-950 flex items-center justify-center">
-                            <img src="${seller.image}" alt="${seller.name}" class="w-full h-full object-cover object-top ${isRestricted ? 'grayscale' : 'group-hover:scale-105'} transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
-                            
-                            ${isRestricted ? `
-                                <span class="absolute top-4 right-4 bg-rose-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow">
-                                    <i class="fa-solid fa-ban mr-1"></i>Restricted Account
-                                </span>
-                            ` : `
-                                <span class="absolute top-4 right-4 bg-emerald-500/90 text-slate-950 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow">
-                                    <i class="fa-solid fa-circle-check mr-1"></i>Verified Seller
-                                </span>
-                            `}
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-1">
-                                <h3 class="text-2xl font-black text-white group-hover:text-orange-400 transition-colors">${seller.name}</h3>
-                                <span class="text-xs font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full">${(seller.ratingScore || 5.0).toFixed(1)} ★</span>
-                            </div>
-                            <p class="text-xs text-slate-400 leading-relaxed mb-4">${seller.bio}</p>
-                            <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3 space-y-1 mb-4">
-                                <span class="text-[10px] text-slate-500 font-bold uppercase">Direct Bank Account</span>
-                                <div class="text-xs font-bold text-amber-400 flex justify-between">
-                                    <span>${seller.bankName}</span>
-                                    <span>${seller.accountNumber}</span>
-                                </div>
-                            </div>
+    container.innerHTML = '';
+
+    sellers.forEach(seller => {
+        const isRestricted = seller.restricted === true;
+        const card = document.createElement('div');
+        card.className = `bg-slate-900 border ${isRestricted ? 'border-rose-900/60 opacity-65' : 'border-slate-800 hover:border-orange-500/60'} rounded-3xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group relative h-full`;
+        
+        card.innerHTML = `
+            <div>
+                <div class="relative h-64 overflow-hidden bg-slate-950 flex items-center justify-center">
+                    <img src="${seller.image}" alt="${seller.name}" class="w-full h-full object-cover object-top ${isRestricted ? 'grayscale' : 'group-hover:scale-105'} transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                    ${isRestricted ? `
+                        <span class="absolute top-4 right-4 bg-rose-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow">
+                            <i class="fa-solid fa-ban mr-1"></i>Restricted Account
+                        </span>
+                    ` : `
+                        <span class="absolute top-4 right-4 bg-emerald-500/90 text-slate-950 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow">
+                            <i class="fa-solid fa-circle-check mr-1"></i>Verified Seller
+                        </span>
+                    `}
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="text-2xl font-black text-white group-hover:text-orange-400 transition-colors">${seller.name}</h3>
+                        <span class="text-xs font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full">${(seller.ratingScore || 5.0).toFixed(1)} ★</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">${seller.bio}</p>
+
+                    <!-- Dynamic Direct Bank Account Details -->
+                    <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3 space-y-1 mb-4">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase">Direct Bank Account (${seller.accountName || seller.name})</span>
+                        <div class="text-xs font-bold text-amber-400 flex justify-between">
+                            <span>${seller.bankName || seller.bank_name}</span>
+                            <span>${seller.accountNumber || seller.account_number}</span>
                         </div>
                     </div>
-                    <div class="p-6 pt-0">
-                        ${isRestricted ? `
-                            <button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-3.5 rounded-xl text-xs cursor-not-allowed flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-lock"></i>
-                                <span>Seller Temporarily Unavailable</span>
-                            </button>
-                        ` : `
-                            <button onclick="openPurchaseModal('${seller.id}')" class="w-full bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-slate-950 font-black py-3.5 rounded-xl text-xs transition-all flex items-center justify-center space-x-2 shadow-lg shadow-orange-600/20">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <span>Buy From ${seller.name}</span>
-                            </button>
-                        `}
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
+                </div>
+            </div>
+            <div class="p-6 pt-0">
+                ${isRestricted ? `
+                    <button disabled class="w-full bg-slate-800 text-slate-500 font-bold py-3.5 rounded-xl text-xs cursor-not-allowed flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Seller Temporarily Unavailable</span>
+                    </button>
+                ` : `
+                    <button onclick="openPurchaseModal('${seller.id}')" class="w-full bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-slate-950 font-black py-3.5 rounded-xl text-xs transition-all flex items-center justify-center space-x-2 shadow-lg shadow-orange-600/20">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Buy From ${seller.name}</span>
+                    </button>
+                `}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
         
         function renderPriceTiers() {
             const prices = getPrices();
