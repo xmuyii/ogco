@@ -26,6 +26,7 @@
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -568,7 +569,65 @@
             </button>
         </div>
     </footer>
+        // Initialize Supabase Client
+    const SUPABASE_URL = 'https://acfdvuhikpbiqmplhowx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjZmR2dWhpa3BiaXFtcGxob3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2OTgzNDYsImV4cCI6MjEwOTI3NDM0Nn0.rTSVmt3X731kb8jLXKnI52jftF9WbhkMUAzqWsxYS8E';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // 1. Fetch Sellers from Supabase
+    async function getSellers() {
+        const { data, error } = await _supabase.from('sellers').select('*');
+        if (error) {
+            console.error("Error fetching sellers:", error);
+            return [];
+        }
+        // Fallback to defaultSellers if table is empty
+        if (!data || data.length === 0) {
+            await seedDefaultSellers();
+            return defaultSellers;
+        }
+        return data;
+    }
+
+    // Seed initial default sellers if table is empty
+    async function seedDefaultSellers() {
+        for (const seller of defaultSellers) {
+            await _supabase.from('sellers').upsert({
+                id: seller.id,
+                name: seller.name,
+                bio: seller.bio,
+                image: seller.image,
+                bank_name: seller.bankName,
+                account_number: seller.accountNumber,
+                account_name: seller.accountName,
+                phone: seller.phone,
+                weekly_orders: seller.weeklyOrders,
+                all_time_orders: seller.allTimeOrders,
+                rating_score: seller.ratingScore,
+                rating_count: seller.ratingCount,
+                progress_percent: seller.progressPercent,
+                restricted: seller.restricted
+            });
+        }
+    }
+
+    // 2. Save / Update Seller Status or Details in Supabase
+    async function updateSellerInSupabase(sellerId, updatedFields) {
+        const { data, error } = await _supabase
+            .from('sellers')
+            .update(updatedFields)
+            .eq('id', sellerId);
+
+        if (error) {
+            console.error("Error updating seller:", error);
+            alert("Failed to sync update to cloud database.");
+            return false;
+        }
+        
+        // Re-render UI globally
+        await initApp();
+        return true;
+    }
     <!-- SCRIPT LOGIC -->
     <script>
         // Initial Default Sellers
@@ -695,14 +754,14 @@
         let activeSelectedSeller = null;
         let activeLeaderboardTab = 'week';
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            window.sellersData = await getSellers();
             renderSellers();
             renderPriceTiers();
             renderLeaderboard();
             renderSellerComments();
             startLiveCounterSimulation();
         });
-
         function startLiveCounterSimulation() {
             const el = document.getElementById('liveVisitorCount');
             if (!el) return;
